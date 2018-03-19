@@ -1,6 +1,7 @@
 # Import MNIST data
 import input_data
-mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 import tensorflow as tf
 
@@ -25,8 +26,8 @@ with tf.name_scope("Wx_b") as scope:
     model = tf.nn.softmax(tf.matmul(x, W) + b) # Softmax
     
 # Add summary ops to collect data
-w_h = tf.histogram_summary("weights", W)
-b_h = tf.histogram_summary("biases", b)
+w_h = tf.summary.histogram("weights", W)
+b_h = tf.summary.histogram("biases", b)
 
 # More name scopes will clean up graph representation
 with tf.name_scope("cost_function") as scope:
@@ -34,7 +35,7 @@ with tf.name_scope("cost_function") as scope:
     # Cross entropy
     cost_function = -tf.reduce_sum(y*tf.log(model))
     # Create a summary to monitor the cost function
-    tf.scalar_summary("cost_function", cost_function)
+    tf.summary.scalar("cost_function", cost_function)
 
 with tf.name_scope("train") as scope:
     # Gradient descent
@@ -44,7 +45,7 @@ with tf.name_scope("train") as scope:
 init = tf.initialize_all_variables()
 
 # Merge all summaries into a single operator
-merged_summary_op = tf.merge_all_summaries()
+merged_summary_op = tf.summary.merge_all()
 
 # Launch the graph
 with tf.Session() as sess:
@@ -53,7 +54,7 @@ with tf.Session() as sess:
     
     
     # Change this to a location on your computer
-    summary_writer = tf.train.SummaryWriter('/LOCATION/ON/YOUR/COMPUTER/', graph_def=sess.graph_def)
+    summary_writer = tf.summary.FileWriter('/home/buru/work/tensorflow_demo', graph_def=sess.graph_def)
 
     # Training cycle
     for iteration in range(training_iteration):
