@@ -21,6 +21,8 @@ import numpy as np
 import tensorflow as tf
 import sys
 
+import time
+
 tf.logging.set_verbosity(tf.logging.INFO)
 
 
@@ -117,6 +119,7 @@ def cnn_model_fn(features, labels, mode):
 
 
 def main(unused_argv):
+  now=time.time()
   # Load training and eval data
   mnist = tf.contrib.learn.datasets.load_dataset("mnist")
   train_data = mnist.train.images  # Returns np.array
@@ -157,10 +160,12 @@ def main(unused_argv):
   print("{'batch_sizesys': "+sys.argv[1]+", 'steps': "+sys.argv[2]+", 'epochs': "+sys.argv[3]+"}")
   print('RESULTS:')
   print(eval_results)
-  
+
+  end = time.time()
+
   fh = open ('res.txt','a')
   fh.write(str(eval_results))
-  fh.write(" @ {'batch_sizesys': "+sys.argv[1]+", 'steps': "+sys.argv[2]+", 'epochs': "+sys.argv[3]+"}")
+  fh.write(" @ {'batch_size': "+sys.argv[1]+", 'steps': "+sys.argv[2]+", 'epochs': "+sys.argv[3]+"} took " + str(end-now) + " seconds")
   fh.write('\n')
 
 

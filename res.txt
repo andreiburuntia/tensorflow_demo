@@ -1,3 +1,5 @@
 {'loss': 1.1012647, 'global_step': 1275, 'accuracy': 0.7937} @ {'batch_sizesys': 30, 'steps': 100, 'epochs': 1}
 {'loss': 0.9561282, 'global_step': 1375, 'accuracy': 0.8087} @ {'batch_sizesys': 50, 'steps': 100, 'epochs': 1}
 {'loss': 0.8390229, 'global_step': 1475, 'accuracy': 0.8298} @ {'batch_sizesys': 100, 'steps': 100, 'epochs': 1}
+{'loss': 0.7568794, 'global_step': 1576, 'accuracy': 0.8323} @ {'batch_sizesys': 30, 'steps': 100, 'epochs': 1} took 23.1239929199 seconds
+{'loss': 0.68756574, 'global_step': 1676, 'accuracy': 0.8352} @ {'batch_sizesys': 50, 'steps': 100, 'epochs': 1} took 29.5226819515 seconds
