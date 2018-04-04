@@ -19,6 +19,7 @@ from __future__ import print_function
 
 import numpy as np
 import tensorflow as tf
+import sys
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
@@ -137,22 +138,30 @@ def main(unused_argv):
   train_input_fn = tf.estimator.inputs.numpy_input_fn(
       x={"x": train_data},
       y=train_labels,
-      batch_size=100,
+      batch_size=int(sys.argv[1]),
       num_epochs=None,
       shuffle=True)
   mnist_classifier.train(
       input_fn=train_input_fn,
-      steps=200,
+      steps=int(sys.argv[2]),
       hooks=[logging_hook])
 
   # Evaluate the model and print results
   eval_input_fn = tf.estimator.inputs.numpy_input_fn(
       x={"x": eval_data},
       y=eval_labels,
-      num_epochs=1,
+      num_epochs=int(sys.argv[3]),
       shuffle=False)
   eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)
+  print("PARAMS:")
+  print("{'batch_sizesys': "+sys.argv[1]+", 'steps': "+sys.argv[2]+", 'epochs': "+sys.argv[3]+"}")
+  print('RESULTS:')
   print(eval_results)
+  
+  fh = open ('res.txt','a')
+  fh.write(str(eval_results))
+  fh.write(" @ {'batch_sizesys': "+sys.argv[1]+", 'steps': "+sys.argv[2]+", 'epochs': "+sys.argv[3]+"}")
+  fh.write('\n')
 
 
 if __name__ == "__main__":
